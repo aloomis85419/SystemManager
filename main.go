@@ -10,6 +10,7 @@ func main() {
 	manager := &Manager{}
 	pollChron := chron.New()
 	generalAppConfig, _ := config.GetSection("app")
+	log.Println("System Manager: started.")
 	pollChron.AddFunc("@every "+generalAppConfig.Key("pollCadence").String()+"m", func() {
 		manager.pollForCleanup(config)
 	})

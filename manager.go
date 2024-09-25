@@ -16,6 +16,7 @@ const (
 )
 
 func (m *Manager) pollForCleanup(config *properties.File) {
+	log.Println("System Manager: executing cleanup jobs.")
 	ttlConfig, err := config.GetSection("ttl")
 	checkErr(err, " Failed to get ttl config.")
 	dirConfig, err := config.GetSection("dirs")
@@ -25,6 +26,7 @@ func (m *Manager) pollForCleanup(config *properties.File) {
 	//Needs to run with sudo permissions
 	trashTtl, _ := ttlConfig.Key("trash").Int()
 	deleteOlderThan(trashTtl, dirConfig.Key("trash").String())
+	log.Println("System Manager: finished executing cleanup jobs.")
 }
 
 func deleteOlderThan(ttl int, basePath string) {
